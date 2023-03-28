@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const holidaySchema = new Schema({
-  title: String,
-  author: String,
-  startLocation: String,
+  title: { type: String, required: true },
+  author: { type: String, required: true },
+  startLocation: { type: String, required: true },
   stops: [
     {
-      city: String,
+      city: { type: String, required: true },
       places: [
         {
           name: String,
@@ -24,6 +24,18 @@ const holidaySchema = new Schema({
       ],
     },
   ],
+  createdAt: {
+    type: Date,
+    default: () => Date.now(),
+    immutable: true,
+  },
+  updatedAt: Date
+});
+
+holidaySchema.pre("save", function (next) {
+    console.log("ur in")
+  this.updatedAt = Date.now();
+  next();
 });
 
 const Holiday = model("Holiday", holidaySchema);
