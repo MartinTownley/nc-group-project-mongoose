@@ -6,14 +6,15 @@ const should = chai.should();
 import chaiHttp from "chai-http";
 import server from "../server.js";
 import { getAllTrips, postTrip } from "../controllers/trip-controller.js";
+
 chai.use(chaiHttp);
 
-before((done) => {
+beforeEach((done) => {
   Trip.deleteMany({});
   done();
 });
 
-after((done) => {
+afterEach((done) => {
   Trip.deleteMany({});
   done();
 });

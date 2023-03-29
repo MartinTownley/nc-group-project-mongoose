@@ -1,26 +1,29 @@
 import * as dotenvFlow from "dotenv-flow";
-dotenvFlow.config();
 import router from "./routes/trip-routes.js";
 import express from "express";
 import mongoose from "mongoose";
 
-
+// load .env file config
+dotenvFlow.config();
 const app = express();
-
-app.get("/api/welcome", (req,res) => {
-  res.status(200).send({message: "welcome to the TraveleRouter-rest-API"})
-})
-
-app.use("/api/trips", router);
+app.use(express.json());
 
 mongoose
   .connect(process.env.DBHOST, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
-  .catch((error) => console.log("Error connecting to MongoDB: ", error))
-  .then(() => app.listen(5000))
-  .then(() => console.log("Server running on port 5000"))
-  .catch((err) => console.log(err));
+  .catch((error) => console.log("Error connecting to MongoDB: ", error));
 
-  export default app;
+mongoose.connection.once("open", () => console.log("Connected to MongoDB"));
+
+app.get("/api/welcome", (req, res) => {
+  res.status(200).send({ message: "welcome to the TraveleRouter-rest-API" });
+});
+
+app.use("/api/trips", router);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;
