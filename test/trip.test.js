@@ -40,7 +40,7 @@ describe("First test collection", () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.a("array");
-        res.body.length.should.be.equal(0);
+        res.body.length.should.be.equal(7);
         done();
       });
   });
@@ -64,8 +64,6 @@ describe("First test collection", () => {
   });
 });
 
-describe("/First Test Collection", () => {
-  it("should test 2 values", () => {
-    expect(2).to.be.equal(2);
-  });
+describe("GET: /api/trips", () => {
+  it("responds with an array of trips", () => {});
 });

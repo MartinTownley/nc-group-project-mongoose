@@ -18,9 +18,9 @@ export const postTrip = async (req, res, next) => {
   const { title, author, startLocation } = req.body;
 
   const trip = new Trip({
-      title,
-      author,
-      startLocation
+    title,
+    author,
+    startLocation,
   });
 
   try {
