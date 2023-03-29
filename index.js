@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 import Holiday from "./models/trip.js";
 //import express from
 
-mongoose.connect(
-  "mongodb+srv://fergusjames:ygzWeS7ssVeTyPYZ@travelerouter.ixdijru.mongodb.net/?retryWrites=true&w=majority"
-);
+
 
 // //Create a new trip object
 // const trip = await Holiday.create({

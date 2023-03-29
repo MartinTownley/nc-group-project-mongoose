@@ -1,7 +1,6 @@
 import Trip from "../models/trip.js";
 
 export const getAllTrips = async (req, res, next) => {
-  let trips;
   try {
     trips = await Trip.find(); // find all trips
   } catch (err) {
@@ -14,18 +13,14 @@ export const getAllTrips = async (req, res, next) => {
 };
 
 export const postTrip = async (req, res, next) => {
-  //console.log(req.body, "<< req.body");
+  console.log(body.req, "<< req");
 
-  const { body } = req;
-  console.log(body, "<< req");
-
-  //const { title, author, startLocation, stops } = req.body;
+  const { title, author, startLocation } = req.body;
 
   const trip = new Trip({
-    //   title,
-    //   author,
-    //   startLocation,
-    //   stops,
+      title,
+      author,
+      startLocation
   });
 
   try {
