@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const holidaySchema = new Schema({
-  title: { type: String, required: true },
-  author: { type: String, required: true },
-  startLocation: { type: String, required: true },
+const tripSchema = new Schema({
+  title: { type: String, required: false },
+  author: { type: String, required: false },
+  startLocation: { type: String, required: false },
   stops: [
     {
-      city: { type: String, required: true },
-      places: [
+      city: { type: String, required: false },
+      arrivalDate: { type: Date, required: false },
+      departureDate: { type: Date, required: false },
+      activities: [
         {
           name: String,
           address: String,
@@ -29,14 +31,13 @@ const holidaySchema = new Schema({
     default: () => Date.now(),
     immutable: true,
   },
-  updatedAt: Date
+  updatedAt: Date,
 });
 
-holidaySchema.pre("save", function (next) {
-    console.log("ur in")
+tripSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-const Holiday = model("Holiday", holidaySchema);
-export default Holiday;
+const Trip = model("Trip", tripSchema);
+export default Trip;
