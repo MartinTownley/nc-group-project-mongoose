@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import Holiday from "./model/Holiday.js";
+import Holiday from "./models/trip.js";
+//import express from
 
-mongoose.connect(
-  "mongodb+srv://fergusjames:ygzWeS7ssVeTyPYZ@travelerouter.ixdijru.mongodb.net/?retryWrites=true&w=majority"
-);
+
 
 // //Create a new trip object
 // const trip = await Holiday.create({
@@ -129,8 +128,10 @@ mongoose.connect(
 //   ],
 // });
 
-
-const trip = await Holiday.findById("6422eb6dafc6f2d395fe58b8", "title stops updatedAt").exec();
+const trip = await Holiday.findById(
+  "6422eb6dafc6f2d395fe58b8",
+  "title stops updatedAt"
+).exec();
 
 trip.title = "great trip to manchester";
 await trip.save();

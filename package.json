@@ -2,9 +2,10 @@
   "name": "nc-group-project-mongoose",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "cross-env NODE_ENV=development nodemon --experimental-modules --es-module-specifier-resolution=node server.js",
+    "test": "cross-env NODE_ENV=test mocha --exit"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,15 @@
   },
   "homepage": "https://github.com/MartinTownley/nc-group-project-mongoose#readme",
   "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.22"
   },
   "dependencies": {
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.18.2",
     "mongoose": "^7.0.3"
   }
 }
