@@ -1,16 +1,9 @@
 import express from "express";
-//import { getAllTrips, postTrip } from "../controllers/trip-controller.js";
-import Trip from "../models/trip.js";
+import { getAllTrips, postTrip } from "../controllers/trip-controller.js";
 
 const router = express.Router();
 
-router.get("/trips", async (req, res) => {
-  const trips = await Trip.find();
-  res.send(trips);
-});
+router.get("/", getAllTrips);
 
-//router.get("/trips", getAllTrips);
-
-//router.post("/trips", postTrip);
-
+router.post("/", postTrip);
 export default router;

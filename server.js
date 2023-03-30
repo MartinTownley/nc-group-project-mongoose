@@ -21,7 +21,7 @@ app.get("/api/welcome", (req, res) => {
   res.status(200).send({ message: "welcome to the TraveleRouter-rest-API" });
 });
 
-app.use("/api/trips", router);
+app.use("/api/trips", router); // use router for anything matching this path. Router only receives what's after trips
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
