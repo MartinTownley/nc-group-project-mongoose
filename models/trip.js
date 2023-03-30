@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const tripSchema = new Schema({
+const TripSchema = new Schema({
   title: { type: String, required: false },
   author: { type: String, required: false },
   startLocation: { type: String, required: false },
@@ -34,10 +34,10 @@ const tripSchema = new Schema({
   updatedAt: Date,
 });
 
-tripSchema.pre("save", function (next) {
+TripSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-const Trip = model("Trip", tripSchema);
+const Trip = model("tripModel", TripSchema);
 export default Trip;
