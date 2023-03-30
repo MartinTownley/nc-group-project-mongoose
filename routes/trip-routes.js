@@ -3,7 +3,7 @@ import { getAllTrips, postTrip } from "../controllers/trip-controller.js";
 
 const router = express.Router();
 
-router.get("/trips", getAllTrips);
-router.post("/trips", postTrip);
+router.get("/", getAllTrips);
 
+router.post("/", postTrip);
 export default router;
