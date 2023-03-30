@@ -13,17 +13,18 @@ export const getAllTrips = async (req, res, next) => {
 };
 
 export const postTrip = async (req, res, next) => {
-  const { title, author, startLocation } = req.body;
+  const { title, author, startLocation, stops } = req.body;
 
+  console.log(author, "<<<stops")
   const trip = new Trip({
     title,
     author,
     startLocation,
+    stops
   });
-
   try {
     await trip.save();
-    return res.status(201).json({ trip });
+    return res.status(201).json(trip);
   } catch (err) {
     console.log(err);
   }
