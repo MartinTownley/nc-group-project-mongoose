@@ -15,6 +15,16 @@ export const getAllTrips = async (req, res, next) => {
 export const postTrip = async (req, res, next) => {
   const { title, author, startLocation, stops } = req.body;
 
+   let existingTrip;
+   try { 
+    existingTrip = await Trip.findOne({title});
+   } catch (err) {
+    console.log(err)
+   }
+   if (existingTrip) {
+    return res.status(400).json({message: "trip already exists under that title! please pick another"})
+   }
+
   const trip = new Trip({
     title,
     author,

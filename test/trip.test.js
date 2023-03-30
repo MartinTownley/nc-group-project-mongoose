@@ -20,18 +20,88 @@ after(async () => {
 });
 
 describe("TESTS", () => {
-  it("should verify that when we post a trip it is successfully stored in the database", (done) => {
+  it("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", (done) => {
+    const trip = {
+      title: "trip3",
+      author: "martin",
+      startLocation: "london",
+      stops: {
+        city: "manchester",
+        arrivalDate: "2023-04-04",
+        departureDate: "2023-04-08",
+        activities: [
+          {
+            name: "The Warehouse Project",
+            address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
+            coordinates: {
+              lat: 53.4756,
+              lng: -2.2253,
+            },
+          },
+          {
+            name: "Hidden at Downtex Mill",
+            address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
+            coordinates: {
+              lat: 53.4756,
+              lng: -2.2253,
+            },
+          },
+        ],
+      },
+    }
     chai
       .request(server)
       .post("/api/trips")
-      .send(tripsData)
+      .send(trip)
       .end((err, res) => {
+        console.log(err)
         res.should.have.status(201);
         done();
       });
   });
 
-  it("should verify that we have 2 trips in the DB", (done) => {
+  it("POST:/api/trips - verify that when we post a trip with a title that is already in the database, returns an error", (done) => {
+    const trip = {
+      title: "trip2",
+      author: "martin",
+      startLocation: "london",
+      stops: {
+        city: "manchester",
+        arrivalDate: "2023-04-04",
+        departureDate: "2023-04-08",
+        activities: [
+          {
+            name: "The Warehouse Project",
+            address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
+            coordinates: {
+              lat: 53.4756,
+              lng: -2.2253,
+            },
+          },
+          {
+            name: "Hidden at Downtex Mill",
+            address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
+            coordinates: {
+              lat: 53.4756,
+              lng: -2.2253,
+            },
+          },
+        ],
+      },
+    }
+    chai
+      .request(server)
+      .post("/api/trips")
+      .send(trip)
+      .end((err, res) => {
+        console.log(err)
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  
+  it("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
     chai
       .request(server)
       .get("/api/trips")
@@ -43,4 +113,10 @@ describe("TESTS", () => {
         done();
       });
   });
+
+  // it("GET:/api/trips/trip_id", (done) => {
+  //   chai
+  //   .request(server)
+  //   .get("/api/trips/")
+  // })
 });
