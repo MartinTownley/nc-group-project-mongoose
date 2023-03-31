@@ -5,8 +5,8 @@ const TripSchema = new Schema({
   title: { type: String, required: false },
   author: { type: String, required: false },
   startLocation: {
-    city: String,
-    coordinates: {
+     city: String, 
+     coordinates: {
       lat: {
         type: Number,
       },
@@ -14,9 +14,9 @@ const TripSchema = new Schema({
         type: Number,
       },
     },
-  },
+     required: false },
   preferences: [{ type: String }],
-  destinations: [
+  stops: [
     {
       city: { type: String, required: false },
       arrivalDate: { type: Date, required: false },
