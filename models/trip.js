@@ -14,7 +14,7 @@ const TripSchema = new Schema({
         type: Number,
       },
     },
-     required: false },
+  },
   preferences: [{ type: String }],
   stops: [
     {

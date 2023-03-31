@@ -1,5 +1,5 @@
-import { config } from "dotenv-flow";
-config();
+import * as dotenvFlow from "dotenv-flow";
+dotenvFlow.config();
 
 import { createClient } from "@google/maps";
 

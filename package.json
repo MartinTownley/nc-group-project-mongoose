@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev-chatgpt": "node script.js",
+    "dev-chatgpt": "cross-env NODE_ENV=externalapis  node inputString.js",
     "dev": "cross-env NODE_ENV=development nodemon --experimental-modules --es-module-specifier-resolution=node server.js",
     "test": "cross-env NODE_ENV=test mocha --exit"
   },
