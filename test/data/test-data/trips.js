@@ -7,7 +7,7 @@ const tripsData = [
       city: "manchester",
       arrivalDate: "2023-04-04",
       departureDate: "2023-04-08",
-      activities: [
+      activities: [{type: String}],
         {
           name: "The Warehouse Project",
           address: "Mayfield Train Station, The Depot, Manchester M1 2QF",

@@ -54,7 +54,7 @@ describe("TESTS", () => {
       .post("/api/trips")
       .send(trip)
       .end((err, res) => {
-        console.log(err)
+        console.log(res.body)
         res.should.have.status(201);
         done();
       });
@@ -94,7 +94,7 @@ describe("TESTS", () => {
       .post("/api/trips")
       .send(trip)
       .end((err, res) => {
-        console.log(err)
+        console.log(res.text, "<<< res")
         res.should.have.status(400);
         done();
       });

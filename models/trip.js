@@ -5,6 +5,7 @@ const TripSchema = new Schema({
   title: { type: String, required: false },
   author: { type: String, required: false },
   startLocation: { type: String, required: false },
+  preferences: [{ type: String }],
   stops: [
     {
       city: { type: String, required: false },
