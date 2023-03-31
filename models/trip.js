@@ -4,8 +4,19 @@ const { Schema, model } = mongoose;
 const TripSchema = new Schema({
   title: { type: String, required: false },
   author: { type: String, required: false },
-  startLocation: { type: String, required: false },
-  stops: [
+  startLocation: {
+    city: String,
+    coordinates: {
+      lat: {
+        type: Number,
+      },
+      lng: {
+        type: Number,
+      },
+    },
+  },
+  preferences: [{ type: String }],
+  destinations: [
     {
       city: { type: String, required: false },
       arrivalDate: { type: Date, required: false },

@@ -5,9 +5,10 @@ const should = chai.should();
 import chaiHttp from "chai-http";
 import server from "../server.js";
 import mongoose from "mongoose";
-import tripsData from "./data/test-data/trips.js";
 chai.use(chaiHttp);
-import Trip from "../../models/trip.js";
+import Trip from "../models/trip.js";
+import tripsData from "./data/test-data/trips.js"
+
 
 beforeEach(async () => {
   await mongoose.connection.dropDatabase();
@@ -19,17 +20,18 @@ after(async () => {
   await mongoose.connection.close();
 });
 
-describe("Create a Trip", () => {
-  it.only("Creates a new Trip", (done) => {
-    const newTrip = new Trip({
-      title: "Trip to the Moon",
-      author: "Shriyam",
-      startLocation: "Earth",
-      stops: ["Mars", "Moon"],
-    });
-    newTrip.save().then(() => {
-      assert(!newTrip.isNew);
-      done();
-    });
+describe("TESTS", () => {
+  it.only("test that a set of preferences input by the user can be added to the trips object", (done) => {
+    const preferences = ["music", "nightlife", "food"];
+
+    chai.request(server)
+    .post("/api/trips/trip1")
+    .send(preferences)
+    .end((err, res)=> {
+        console.log(res.body)
+        res.should.have.status(201);
+        done()
+    })
+    ;
   });
 });

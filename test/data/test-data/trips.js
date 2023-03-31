@@ -2,8 +2,14 @@ const tripsData = [
   {
     title: "trip1",
     author: "fergus",
-    startLocation: "nottingham",
-    stops: {
+    startLocation: {
+      city: "nottingham",
+      coordinates: {
+        lat: 52.954,
+        lng: -1.155,
+      },
+    },
+    destination: {
       city: "manchester",
       arrivalDate: "2023-04-04",
       departureDate: "2023-04-08",
@@ -30,8 +36,14 @@ const tripsData = [
   {
     title: "trip2",
     author: "martin",
-    startLocation: "london",
-    stops: {
+    startLocation: {
+      city: "london",
+      coordinates: {
+        lat: 51.5072,
+        lng: -0.1276,
+      },
+    },
+    destination: {
       city: "manchester",
       arrivalDate: "2023-04-04",
       departureDate: "2023-04-08",
