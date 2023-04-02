@@ -6,8 +6,8 @@ import chaiHttp from "chai-http";
 import server from "../server.js";
 import mongoose from "mongoose";
 import tripsData from "./data/test-data/trips.js";
-chai.use(chaiHttp);
 import Trip from "../models/trip.js";
+chai.use(chaiHttp);
 
 beforeEach(async () => {
   await mongoose.connection.dropDatabase();
@@ -20,7 +20,7 @@ after(async () => {
 });
 
 describe("TESTS", () => {
-  it("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", (done) => {
+  it.only("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", (done) => {
     const trip = {
       title: "trip3",
       author: "martin",
@@ -119,4 +119,18 @@ describe("TESTS", () => {
   //   .request(server)
   //   .get("/api/trips/")
   // })
+
+  it("POST :/api/trips/:trip_title/preferences - verify that a set of preferences input by the user can be added to the trips object", (done) => {
+    const preferences = ["music", "nightlife", "food"];
+
+    chai.request(server)
+    .post("/api/trips/trip1")
+    .send(preferences)
+    .end((err, res)=> {
+        console.log(res.body)
+        res.should.have.status(201);
+        done()
+    })
+    ;
+  });
 });

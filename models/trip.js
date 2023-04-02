@@ -16,7 +16,7 @@ const TripSchema = new Schema({
     },
   },
   preferences: [{ type: String }],
-  stops: [
+  destination: 
     {
       city: { type: String, required: false },
       arrivalDate: { type: Date, required: false },
@@ -36,7 +36,7 @@ const TripSchema = new Schema({
         },
       ],
     },
-  ],
+  
   createdAt: {
     type: Date,
     default: () => Date.now(),

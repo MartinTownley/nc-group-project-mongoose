@@ -43,6 +43,7 @@ const tripsData = [
         lng: -0.1276,
       },
     },
+    preferences: ["music", "nightlife", "food"],
     destination: {
       city: "manchester",
       arrivalDate: "2023-04-04",

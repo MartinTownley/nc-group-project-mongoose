@@ -1,4 +1,5 @@
 import Trip from "../models/trip.js";
+import { makeQueryString } from "../inputString.js";
 
 export const getAllTrips = async (req, res, next) => {
   try {
@@ -13,7 +14,7 @@ export const getAllTrips = async (req, res, next) => {
 };
 
 export const postTrip = async (req, res, next) => {
-  const { title, author, startLocation, destination } = req.body;
+  const { title, author, startLocation, destination,  } = req.body;
 
   let existingTrip;
   try {
@@ -22,11 +23,9 @@ export const postTrip = async (req, res, next) => {
     console.log(err);
   }
   if (existingTrip) {
-    return res
-      .status(400)
-      .json({
-        message: "trip already exists under that title! please pick another",
-      });
+    return res.status(400).json({
+      message: "trip already exists under that title! please pick another",
+    });
   }
 
   const trip = new Trip({
@@ -44,8 +43,8 @@ export const postTrip = async (req, res, next) => {
 };
 
 export const postPreferences = async (req, res, next) => {
-  const  preferences  = req.body;
-  const  title  = req.params.trip_title;
+  const preferences = req.body;
+  const title = req.params.trip_title;
 
   let existingTrip;
   try {
@@ -53,6 +52,22 @@ export const postPreferences = async (req, res, next) => {
     existingTrip.preferences = preferences;
     await existingTrip.save();
     return res.status(201).json(preferences);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const makeActivities = async(req, res, next) => {
+  // const title = req.params.trip_title;
+  
+  try {
+    const {city, preferences} = req.body
+    // const trips = await Trip.findOne({title: title});
+    // const city = trips.destination.city
+    // const preferences = trips.preferences
+    
+    const activities = await makeQueryString(city, preferences);
+    return res.status(200).json({ activities });
   } catch (err) {
     console.log(err);
   }

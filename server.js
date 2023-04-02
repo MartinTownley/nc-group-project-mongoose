@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 
 // load .env file config
 dotenvFlow.config();
-console.log(process.env, "<<process.env")
 const app = express();
 app.use(express.json());
 
