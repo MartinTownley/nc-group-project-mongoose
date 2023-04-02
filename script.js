@@ -15,6 +15,7 @@ const generateLocations = async (inputString) => {
     messages: [{ role: "user", content: inputString }],
   });
   const contentFull = result.data.choices[0].message.content;
+  console.log(result.data.choices[0].message);
   const contentFullParsed = JSON.parse(contentFull);
   const locations = Array.isArray(contentFullParsed)
     ? contentFullParsed

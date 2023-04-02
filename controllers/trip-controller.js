@@ -75,12 +75,18 @@ export const makeActivities = async (req, res, next) => {
   }
 };
 
-export const geoCodeController = async (req, res, next) => {
+export const geoCodeActivitiesController = async (req, res, next) => {
   console.log(req.query, "qeuries");
 
   try {
-    const locations = req.query;
-    console.log(locations);
+    let locations;
+    if (!Array.isArray(req.query)) {
+      locations = Object.values(req.query);
+    } else {
+      locations = req.query;
+    }
+
+    console.log(locations, "location inController");
     // const trips = await Trip.findOne({title: title});
     // const city = trips.destination.city
     // const preferences = trips.preferences
@@ -91,3 +97,20 @@ export const geoCodeController = async (req, res, next) => {
     console.log(err);
   }
 };
+
+// export const geoCodeStopsController = async (req, res, next) => {
+//   console.log(req.query, "qeuries");
+
+//   try {
+//     const locations = req.query;
+//     console.log(locations);
+//     // const trips = await Trip.findOne({title: title});
+//     // const city = trips.destination.city
+//     // const preferences = trips.preferences
+
+//     const geoCodedLocations = await geoCodeLocations(locations);
+//     return res.status(200).json({ geoCodedLocations });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//};

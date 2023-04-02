@@ -4,7 +4,8 @@ import {
   postTrip,
   postPreferences,
   makeActivities,
-  geoCodeController,
+  geoCodeActivitiesController,
+  //   geoCodeStopsController,
 } from "../controllers/trip-controller.js";
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.post("/:trip_title", postPreferences);
 
 router.get("/:trip_title/makePreferences", makeActivities);
 
-router.get("/geoCode", geoCodeController);
+router.get("/geoCodeActivities", geoCodeActivitiesController);
+// router.get("/geoCodeStops", geoCodeStopsController);
 
 export default router;

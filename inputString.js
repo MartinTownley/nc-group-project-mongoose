@@ -25,8 +25,8 @@ export const makeQueryString = async (city, preferences) => {
 
   console.log(finalString);
 
-//   const locations = await generateLocations(finalString);
-//   console.log(locations, "<< Finished array");
+  //   const locations = await generateLocations(finalString);
+  //   console.log(locations, "<< Finished array");
 
-return await generateLocations(finalString);
+  return await generateLocations(finalString);
 };

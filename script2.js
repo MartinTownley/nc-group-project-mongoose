@@ -10,10 +10,11 @@ const gmaps = createClient({
 
 const geoCodeLocations = async (locations) => {
   const geocodedLocations = await Promise.all(
+    // console.log(locations, "locations in script2")
     locations.map(async (location) => {
       const response = await gmaps
         .geocode({
-          address: location.address ? location.address : location.city,
+          address: !location.address ? location.city : location.address,
         })
         .asPromise();
       if (response.status === 200) {
