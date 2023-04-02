@@ -2,11 +2,14 @@ import * as dotenvFlow from "dotenv-flow";
 import router from "./routes/trip-routes.js";
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 
 // load .env file config
 dotenvFlow.config();
 const app = express();
 app.use(express.json());
+
+app.use(cors());
 
 mongoose
   .connect(process.env.DBHOST, {
@@ -23,7 +26,7 @@ app.get("/api/welcome", (req, res) => {
 
 app.use("/api/trips", router); // use router for anything matching this path. Router only receives what's after trips
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8989;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export default app;

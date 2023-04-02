@@ -1,5 +1,6 @@
 import Trip from "../models/trip.js";
 import { makeQueryString } from "../inputString.js";
+import geoCodeLocations from "../script2.js";
 
 export const getAllTrips = async (req, res, next) => {
   try {
@@ -14,7 +15,7 @@ export const getAllTrips = async (req, res, next) => {
 };
 
 export const postTrip = async (req, res, next) => {
-  const { title, author, startLocation, destination,  } = req.body;
+  const { title, author, startLocation, destination } = req.body;
 
   let existingTrip;
   try {
@@ -57,17 +58,35 @@ export const postPreferences = async (req, res, next) => {
   }
 };
 
-export const makeActivities = async(req, res, next) => {
+export const makeActivities = async (req, res, next) => {
   // const title = req.params.trip_title;
-  
+
+  console.log(req.query, "body");
   try {
-    const {city, preferences} = req.body
+    const { city, preferences } = req.query;
     // const trips = await Trip.findOne({title: title});
     // const city = trips.destination.city
     // const preferences = trips.preferences
-    
+
     const activities = await makeQueryString(city, preferences);
     return res.status(200).json({ activities });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const geoCodeController = async (req, res, next) => {
+  console.log(req.query, "qeuries");
+
+  try {
+    const locations = req.query;
+    console.log(locations);
+    // const trips = await Trip.findOne({title: title});
+    // const city = trips.destination.city
+    // const preferences = trips.preferences
+
+    const geoCodedLocations = await geoCodeLocations(locations);
+    return res.status(200).json({ geoCodedLocations });
   } catch (err) {
     console.log(err);
   }
