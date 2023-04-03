@@ -1,7 +1,7 @@
 import Trip from "../models/trip.js";
 import { makeQueryString } from "../inputString.js";
 import geoCodeLocations from "../script2.js";
-import  ObjectId  from "mongodb";
+import ObjectId from "mongodb";
 
 export const getAllTrips = async (req, res, next) => {
   try {
@@ -19,15 +19,15 @@ export const getAllTrips = async (req, res, next) => {
 
 export const getTripById = async (req, res, next) => {
   const { trip_id } = req.params;
- 
-  try {
-    let trips = await Trip.findOne({ _id: trip_id });
 
-    console.log(trips, "trips inside controller");
-    if (!trips) {
-      return res.status(404).json({ message: "Could not find trips." });
+  try {
+    let trip = await Trip.findOne({ _id: trip_id });
+
+    console.log(trip, "tripById inside controller");
+    if (!trip) {
+      return res.status(404).json({ message: "Could not find trip." });
     }
-    return res.status(200).json({ trips });
+    return res.status(200).json({ trip });
   } catch (err) {
     console.log(err);
   }
