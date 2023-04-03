@@ -10,45 +10,55 @@ import Trip from "../models/trip.js";
 chai.use(chaiHttp);
 
 import tripsData from "./data/test-data/trips.js";
-
-describe("TESTS", () => {
+describe("TESTS", function()  {
+  this.timeout(55000);
   before((done) => {
     server
-      .connect()
-      .then(() => done())
-      .catch(() => done(err));
-  });
-
-  after((done) => {
-    server
-    .close()
+    .connect()
     .then(() => done())
     .catch(() => done(err));
-});
-
-beforeEach((done) => {
-  mongoose.connection.dropDatabase()
+  });
+  
+  after((done) => {
+    if (server && server.listening) {
+      server.close((err) => {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+    } else {
+      done();
+    }
+  });
+  
+  beforeEach((done) => {
+    mongoose.connection
+    .dropCollection("trips")
     .then(() => {
-      return mongoose.connection.collection("trips").insertMany(tripsData);
-    })
-    .then(() => done())
-    .catch((err) => done(err));
-});
+      mongoose.connection.createCollection("trips");
+      Trip.insertMany(tripsData.tripsData);
+      })
+      .then(() => done())
+      .catch((err) => done(err));
+    });
 
-  it.only("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", (done) => {
-    const trip = {
-      title: "trip3",
+    it.only("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", function(done) {
+      const trip = { 
+      title: "trip2",
       author: "martin",
       city: "london",
       coordinates: {
         lat: 51.5072,
-        lng: -0.1276,
+        lng: -0.1276
       },
-      stops: {
+      preferences: ["nightlife", "food"],
+      destination: {
         city: "manchester",
         coordinates: {
           lat: 53.4808,
-          lng: -2.2426,
+          lng: -2.2426
         },
         arrivalDate: "2023-04-04",
         departureDate: "2023-04-08",
@@ -58,7 +68,7 @@ beforeEach((done) => {
             address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
             coordinates: {
               lat: 53.4756,
-              lng: -2.2253,
+              lng: -2.2253
             },
           },
           {
@@ -66,7 +76,7 @@ beforeEach((done) => {
             address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
             coordinates: {
               lat: 53.4756,
-              lng: -2.2253,
+              lng: -2.2253
             },
           },
         ],
@@ -83,13 +93,22 @@ beforeEach((done) => {
       });
   });
 
-  it("POST:/api/trips - verify that when we post a trip with a title that is already in the database, returns an error", (done) => {
-    const trip = {
-      title: "trip2",
+  it.only("POST:/api/trips - verify that when we post a trip with a title that is already in the database, returns an error", (done) => {
+    const trip = { 
+      title: "trip3",
       author: "martin",
-      startLocation: "london",
-      stops: {
+      city: "london",
+      coordinates: {
+        lat: 51.5072,
+        lng: -0.1276
+      },
+      preferences: ["nightlife", "food"],
+      destination: {
         city: "manchester",
+        coordinates: {
+          lat: 53.4808,
+          lng: -2.2426
+        },
         arrivalDate: "2023-04-04",
         departureDate: "2023-04-08",
         activities: [
@@ -98,7 +117,7 @@ beforeEach((done) => {
             address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
             coordinates: {
               lat: 53.4756,
-              lng: -2.2253,
+              lng: -2.2253
             },
           },
           {
@@ -106,14 +125,14 @@ beforeEach((done) => {
             address: "Mayfield Train Station, The Depot, Manchester M1 2QF",
             coordinates: {
               lat: 53.4756,
-              lng: -2.2253,
+              lng: -2.2253
             },
           },
         ],
       },
     };
     chai
-      .request(server)
+      .request(app)
       .post("/api/trips")
       .send(trip)
       .end((err, res) => {
@@ -123,12 +142,13 @@ beforeEach((done) => {
       });
   });
 
-  it("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
+  it.only("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
     chai
-      .request(server)
+      .request(app)
       .get("/api/trips")
       .end((err, res) => {
-        const { trips } = res.body;
+        const  trips  = JSON.parse(res.text).trips;
+        console.log(trips, "<< trips")
         res.should.have.status(200);
         trips.should.be.a("array");
         trips.length.should.be.equal(2);
@@ -146,7 +166,7 @@ beforeEach((done) => {
     const preferences = ["music", "nightlife", "food"];
 
     chai
-      .request(server)
+      .request(app)
       .post("/api/trips/trip1")
       .send(preferences)
       .end((err, res) => {

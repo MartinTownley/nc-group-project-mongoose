@@ -1,16 +1,19 @@
 const tripsData = [
   {
-    title: "trip1",
-    author: "fergus",
-    startLocation: {
-      city: "nottingham",
-      coordinates: {
-        lat: 52.954,
-        lng: -1.155,
-      },
+    title: "trip3",
+    author: "martin",
+    city: "london",
+    coordinates: {
+      lat: 51.5072,
+      lng: -0.1276,
     },
+    preferences: ["nightlife", "food"],
     destination: {
       city: "manchester",
+      coordinates: {
+        lat: 53.4808,
+        lng: -2.2426,
+      },
       arrivalDate: "2023-04-04",
       departureDate: "2023-04-08",
       activities: [
@@ -34,18 +37,20 @@ const tripsData = [
     },
   },
   {
-    title: "trip2",
+    title: "trip5",
     author: "martin",
-    startLocation: {
-      city: "london",
-      coordinates: {
-        lat: 51.5072,
-        lng: -0.1276,
-      },
+    city: "london",
+    coordinates: {
+      lat: 51.5072,
+      lng: -0.1276,
     },
-    preferences: ["music", "nightlife", "food"],
+    preferences: ["nightlife", "food"],
     destination: {
       city: "manchester",
+      coordinates: {
+        lat: 53.4808,
+        lng: -2.2426,
+      },
       arrivalDate: "2023-04-04",
       departureDate: "2023-04-08",
       activities: [

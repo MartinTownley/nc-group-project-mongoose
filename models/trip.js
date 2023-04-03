@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const TripSchema = new Schema({
   title: { type: String },
   author: { type: String },
-    city: String,
+    city: { type: String},
     coordinates: {
       lat: {
         type: Number
@@ -55,5 +55,5 @@ TripSchema.pre("save", function (next) {
   next();
 });
 
-const Trip = model("tripModel", TripSchema);
+const Trip = model("Trip", TripSchema);
 export default Trip;

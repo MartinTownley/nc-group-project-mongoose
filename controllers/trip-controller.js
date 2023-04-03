@@ -4,7 +4,9 @@ import geoCodeLocations from "../script2.js";
 
 export const getAllTrips = async (req, res, next) => {
   try {
-    const trips = await Trip.find();
+    let trips = await Trip.find();
+
+    console.log(trips, "trips inside controller");
     if (!trips) {
       return res.status(404).json({ message: "Could not find trips." });
     }
@@ -15,25 +17,32 @@ export const getAllTrips = async (req, res, next) => {
 };
 
 export const postTrip = async (req, res, next) => {
-  const {  title,
+  const {
+    title,
     author,
     city,
     coordinates,
     preferences,
-    destination, } = req.body;
-
+    destination,
+    // activities,
+  } = req.body.params;
+  console.log(
+    title,
+    req.body,
+    "<<body",
+    req.body.params,
+    "<<params"
+    // activities,
+    // "activities"
+  );
   let existingTrip;
   try {
-    existingTrip = await Trip.findOne({ title });
+    existingTrip = await Trip.findOne({ title: title });
+    console.log(existingTrip, existingTrip.title, "existingTrip in BE");
   } catch (err) {
     console.log(err);
   }
-  if (existingTrip) {
-    return res.status(400).json({
-      message: "trip already exists under that title! please pick another",
-    });
-  }
-
+  // if (!existingTrip.title) {
   const trip = new Trip({
     title,
     author,
@@ -41,6 +50,7 @@ export const postTrip = async (req, res, next) => {
     coordinates,
     preferences,
     destination,
+    // activities,
   });
   try {
     await trip.save();
@@ -48,7 +58,40 @@ export const postTrip = async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+  // } else {
+  //   return res.status(400).json({
+  //     message: "trip already exists under that title! please pick another",
+  //   });
+  // }
 };
+
+// export const postTrip = async (req, res, next) => {
+//   const trip = req.body;
+//   console.log(trip.title, "first title");
+  
+//   Trip.findOne({ title: trip.title })
+//     .then((existingTrip) => {
+//       console.log(existingTrip, "resolution of promise");
+//       if (existingTrip) {
+//         return res.status(400).json({
+//           message: "trip already exists under that title! please pick another",
+//         });
+//       }
+//     })
+//     .then(() => {
+//       const newTrip = new Trip({
+//         trip
+//       });
+//       newTrip.save();
+//       return res.status(201).json(trip);
+//     })
+//     .then((trip) => {
+//       console.log(trip, "new trip");
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 export const postPreferences = async (req, res, next) => {
   const preferences = req.body;
@@ -97,4 +140,3 @@ export const geoCodeActivitiesController = async (req, res, next) => {
     console.log(err);
   }
 };
-
