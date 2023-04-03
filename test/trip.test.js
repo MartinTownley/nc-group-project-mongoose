@@ -33,18 +33,18 @@ describe("TESTS", function()  {
     }
   });
   
-  beforeEach((done) => {
-    mongoose.connection
-    .dropCollection("trips")
-    .then(() => {
-      mongoose.connection.createCollection("trips");
-      Trip.insertMany(tripsData.tripsData);
-      })
-      .then(() => done())
-      .catch((err) => done(err));
-    });
+  // beforeEach((done) => {
+  //   mongoose.connection
+  //   .dropCollection("trips")
+  //   .then(() => {
+  //     mongoose.connection.createCollection("trips");
+  //     Trip.insertMany(tripsData.tripsData);
+  //     })
+  //     .then(() => done())
+  //     .catch((err) => done(err));
+  //   });
 
-    it.only("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", function(done) {
+    it("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", function(done) {
       const trip = { 
       title: "trip2",
       author: "martin",
@@ -93,7 +93,7 @@ describe("TESTS", function()  {
       });
   });
 
-  it.only("POST:/api/trips - verify that when we post a trip with a title that is already in the database, returns an error", (done) => {
+  it("POST:/api/trips - verify that when we post a trip with a title that is already in the database, returns an error", (done) => {
     const trip = { 
       title: "trip3",
       author: "martin",
@@ -142,7 +142,7 @@ describe("TESTS", function()  {
       });
   });
 
-  it.only("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
+  it("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
     chai
       .request(app)
       .get("/api/trips")
@@ -152,6 +152,18 @@ describe("TESTS", function()  {
         res.should.have.status(200);
         trips.should.be.a("array");
         trips.length.should.be.equal(2);
+        done();
+      });
+  });
+
+  it.only("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
+    chai
+      .request(app)
+      .get("/api/trips/642ae4f385dfa68f0abfdba0")
+      .end((err, res) => {
+        const  trips  = JSON.parse(res.text).trips;
+        console.log(trips, "<< trips")
+        res.should.have.status(200);
         done();
       });
   });

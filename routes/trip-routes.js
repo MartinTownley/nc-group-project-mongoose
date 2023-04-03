@@ -7,6 +7,7 @@ import {
   postPreferences,
   makeActivities,
   geoCodeActivitiesController,
+  getTripById
 } from "../controllers/trip-controller.js";
 
 const app = express();
@@ -16,6 +17,8 @@ app.use(cors());
 const router = express.Router();
 
 router.get("/", getAllTrips);
+
+router.get("/:trip_id", getTripById)
 
 router.post("/", postTrip);
 
