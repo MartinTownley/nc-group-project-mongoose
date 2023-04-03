@@ -2,41 +2,46 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const TripSchema = new Schema({
-  title: { type: String, required: false },
-  author: { type: String, required: false },
-  startLocation: {
-     city: String, 
-     coordinates: {
+  title: { type: String },
+  author: { type: String },
+    city: String,
+    coordinates: {
       lat: {
-        type: Number,
+        type: Number
       },
       lng: {
-        type: Number,
-      },
+        type: Number
+      }
     },
-  },
   preferences: [{ type: String }],
-  destination: 
-    {
-      city: { type: String, required: false },
-      arrivalDate: { type: Date, required: false },
-      departureDate: { type: Date, required: false },
-      activities: [
-        {
-          name: String,
-          address: String,
-          coordinates: {
-            lat: {
-              type: Number,
-            },
-            lng: {
-              type: Number,
-            },
-          },
-        },
-      ],
+  destination: {
+    city: { type: String },
+    coordinates: {
+      lat: {
+        type: Number
+      },
+      lng: {
+        type: Number
+      }
     },
-  
+    arrivalDate: { type: Date },
+    departureDate: { type: Date },
+    activities: [
+      {
+        name: String,
+        address: String,
+        coordinates: {
+          lat: {
+            type: Number,
+          },
+          lng: {
+            type: Number
+          }
+        },
+      },
+    ],
+  },
+
   createdAt: {
     type: Date,
     default: () => Date.now(),

@@ -3,30 +3,53 @@ import chai from "chai";
 const expect = chai.expect;
 const should = chai.should();
 import chaiHttp from "chai-http";
-import server from "../server.js";
+import app from "../routes/trip-routes.js";
+import server from "../index.js";
 import mongoose from "mongoose";
-import tripsData from "./data/test-data/trips.js";
 import Trip from "../models/trip.js";
 chai.use(chaiHttp);
 
-beforeEach(async () => {
-  await mongoose.connection.dropDatabase();
-
-  await Trip.create(tripsData.tripsData);
-});
-
-after(async () => {
-  await mongoose.connection.close();
-});
+import tripsData from "./data/test-data/trips.js";
 
 describe("TESTS", () => {
+  before((done) => {
+    server
+      .connect()
+      .then(() => done())
+      .catch(() => done(err));
+  });
+
+  after((done) => {
+    server
+    .close()
+    .then(() => done())
+    .catch(() => done(err));
+});
+
+beforeEach((done) => {
+  mongoose.connection.dropDatabase()
+    .then(() => {
+      return mongoose.connection.collection("trips").insertMany(tripsData);
+    })
+    .then(() => done())
+    .catch((err) => done(err));
+});
+
   it.only("POST:/api/trips - verify that when we post a trip it is successfully stored in the database", (done) => {
     const trip = {
       title: "trip3",
       author: "martin",
-      startLocation: "london",
+      city: "london",
+      coordinates: {
+        lat: 51.5072,
+        lng: -0.1276,
+      },
       stops: {
         city: "manchester",
+        coordinates: {
+          lat: 53.4808,
+          lng: -2.2426,
+        },
         arrivalDate: "2023-04-04",
         departureDate: "2023-04-08",
         activities: [
@@ -48,13 +71,13 @@ describe("TESTS", () => {
           },
         ],
       },
-    }
+    };
     chai
-      .request(server)
+      .request(app)
       .post("/api/trips")
       .send(trip)
       .end((err, res) => {
-        console.log(res.body)
+        console.log(res.body);
         res.should.have.status(201);
         done();
       });
@@ -88,19 +111,18 @@ describe("TESTS", () => {
           },
         ],
       },
-    }
+    };
     chai
       .request(server)
       .post("/api/trips")
       .send(trip)
       .end((err, res) => {
-        console.log(res.text, "<<< res")
+        console.log(res.text, "<<< res");
         res.should.have.status(400);
         done();
       });
   });
 
-  
   it("GET:/api/trips - verify that we have 2 trips in the DB by default", (done) => {
     chai
       .request(server)
@@ -123,14 +145,14 @@ describe("TESTS", () => {
   it("POST :/api/trips/:trip_title/preferences - verify that a set of preferences input by the user can be added to the trips object", (done) => {
     const preferences = ["music", "nightlife", "food"];
 
-    chai.request(server)
-    .post("/api/trips/trip1")
-    .send(preferences)
-    .end((err, res)=> {
-        console.log(res.body)
+    chai
+      .request(server)
+      .post("/api/trips/trip1")
+      .send(preferences)
+      .end((err, res) => {
+        console.log(res.body);
         res.should.have.status(201);
-        done()
-    })
-    ;
+        done();
+      });
   });
 });
