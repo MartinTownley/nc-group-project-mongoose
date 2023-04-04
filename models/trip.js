@@ -4,25 +4,25 @@ const { Schema, model } = mongoose;
 const TripSchema = new Schema({
   title: { type: String },
   author: { type: String },
-    city: { type: String},
-    coordinates: {
-      lat: {
-        type: Number
-      },
-      lng: {
-        type: Number
-      }
+  city: { type: String },
+  coordinates: {
+    latitude: {
+      type: Number,
     },
+    longitude: {
+      type: Number,
+    },
+  },
   preferences: [{ type: String }],
   destination: {
     city: { type: String },
     coordinates: {
-      lat: {
-        type: Number
+      latitude: {
+        type: Number,
       },
-      lng: {
-        type: Number
-      }
+      longitude: {
+        type: Number,
+      },
     },
     arrivalDate: { type: Date },
     departureDate: { type: Date },
@@ -31,12 +31,12 @@ const TripSchema = new Schema({
         name: String,
         address: String,
         coordinates: {
-          lat: {
+          latitude: {
             type: Number,
           },
-          lng: {
-            type: Number
-          }
+          longitude: {
+            type: Number,
+          },
         },
       },
     ],
