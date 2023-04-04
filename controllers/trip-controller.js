@@ -19,7 +19,7 @@ export const getAllTrips = async (req, res, next) => {
 
 export const getTripById = async (req, res, next) => {
   const { trip_id } = req.params;
- 
+
   try {
     let trips = await Trip.findOne({ _id: trip_id });
 

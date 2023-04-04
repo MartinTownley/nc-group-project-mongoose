@@ -18,6 +18,8 @@ const router = express.Router();
 
 router.get("/", getAllTrips);
 
+router.get("/geoCodeActivities", geoCodeActivitiesController);
+
 router.get("/:trip_id", getTripById)
 
 router.post("/", postTrip);
@@ -26,7 +28,6 @@ router.post("/:trip_title", postPreferences);
 
 router.get("/:trip_title/makePreferences", makeActivities);
 
-router.get("/geoCodeActivities", geoCodeActivitiesController);
 
 app.use("/api/trips", router); // use router for anything matching this path. Router only receives what's after trips
 
