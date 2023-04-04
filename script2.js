@@ -19,6 +19,10 @@ const geoCodeLocations = async (locations) => {
         .asPromise();
       if (response.status === 200) {
         location.coordinates = response.json.results[0].geometry.location;
+        location.coordinates.latitude = location.coordinates.lat
+        delete location.coordinates.lat;
+        location.coordinates.longitude = location.coordinates.lng
+        delete location.coordinates.lng;
       } else {
         console.log(response.error_message);
       }
