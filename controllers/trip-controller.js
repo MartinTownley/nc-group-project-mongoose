@@ -6,16 +6,24 @@ import ObjectId from "mongodb";
 export const getAllTrips = async (req, res, next) => {
   try {
     let trips = await Trip.find();
-
     console.log(trips, "trips inside controller");
     if (!trips) {
-      return res.status(404).json({ message: "Could not find trips." });
+      if (!trips) {
+        return res.status(404).json({ message: "Could not find trips." });
+      }
     }
-    return res.status(200).json({ trips });
+   const filteredTrips = trips.map((trip) => ({
+      _id: trip._id,
+      destination: trip.destination.city,
+      startDate: trip.destination.arrivalDate,
+      preferences: trip.preferences
+    }))
+    return res.status(200).json({ trips: filteredTrips });
   } catch (err) {
     console.log(err);
   }
-};
+}
+
 
 export const getTripById = async (req, res, next) => {
   const { trip_id } = req.params;
